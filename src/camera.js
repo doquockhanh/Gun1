@@ -13,12 +13,16 @@ const camera = function(){
     let cam_y = 500;
     let cam_move_s = 10;
     attr.update = function () {
-        let key = AllKeyEvent.up_down()
-        // cam moving around (press space to back to current follower) (char1)
-        if(key.a){cam_x > 0 ? cam_x -= cam_move_s: null}
-        if(key.d){cam_x < Map1.getSize().width - canvas.width ? cam_x += cam_move_s : null}
-        if(key.w){cam_y > 0 ? cam_y -= cam_move_s: null}
-        if(key.s){cam_y < Map1.getSize().height - canvas.height ? cam_y += cam_move_s : null}
+        if(Movements.isCamMoving()) {
+            let key = AllKeyEvent.up_down()
+            let w = Map1.getSize().width - canvas.width;
+            let h = Map1.getSize().height - canvas.height;
+            // cam moving around (press space to back to current follower) (char1)
+            if(key.a){cam_x > 0 ? cam_x -= cam_move_s : cam_x = 0}
+            if(key.d){cam_x < w ? cam_x += cam_move_s : cam_x = w}
+            if(key.w){cam_y > 0 ? cam_y -= cam_move_s : cam_y = 0}
+            if(key.s){cam_y < h ? cam_y += cam_move_s : cam_y = h}
+        }
     }
         
     attr.getPositions = function() {
@@ -40,11 +44,6 @@ const camera = function(){
 
     attr.clear = function(){
         context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    attr.isCamMoving = function (){
-        let key = AllKeyEvent.up_down()
-        return key.a || key.d || key.w || key.s;
     }
 
     return attr;

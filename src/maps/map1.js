@@ -38,7 +38,7 @@ const Map1 = function(){
     }
 
     attr.getDropPosition = function () {
-        // this position use to random character
+        // this position use to random characters
         return [[600, 700], [800, 900], [1100, 1200], [1300, 1400]];
     }
 
