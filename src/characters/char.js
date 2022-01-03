@@ -3,8 +3,8 @@ const status = {
     inLand: 1
 }
 
-const constant = {
-    speed: 5,
+const char_constant = {
+    speed: 2,
     side: {
         lookLeft: 1.3,
         lookRight: 0.7,
@@ -13,14 +13,19 @@ const constant = {
     follow_speed: 20,
 };
 
-class Char1 {
+class Char {
     constructor (x, y, width, height) {
         this.x = x;
         this.y = y;
         this.w = width;
         this.h = height;
         this.status = status.inAir; // when characters drop, it cant move
-        this.side = constant.side.lookLeft; // characters move left/right will look at left/right side
+        this.side = char_constant.side.lookLeft; // characters move left/right will look at left/right side
+        this.gun = null;
+        this.setGun = function (gun) {
+            this.gun = gun;
+        }
+        this.power = 0; // it is power of bullet, but put here... hmm
 
         this.draw = function () {
             let context = camera.getCam();
@@ -34,8 +39,10 @@ class Char1 {
         this.update = function () {
             this.collision();
             this.setCamFollow();
+            this.gun.update(this.side, this.x, this.y, this.w, this.h);
             this.draw();
             this.move();
+            this.fireEvent();
         }
 
         this.collision = function () {
@@ -44,10 +51,11 @@ class Char1 {
             for (const texture of textures) {
                 if(Collisions.two_square(this, texture) === false){
                     is_collision = false;
+                    break;
                 }
             }
             if(is_collision) {
-                this.y < Map1.getSize().height ? this.y += constant.fall_speed : null;
+                this.y < Map1.getSize().height ? this.y += char_constant.fall_speed : null;
                 this.status = status.inAir;
             }else {
                 this.status = status.inLand;
@@ -56,23 +64,24 @@ class Char1 {
 
         this.move = function() {
             if(Movements.isCamFollowing() && this.status === status.inLand) {
-                let key = AllKeyEvent.up_down()
-                let canvas = camera.getCanvas();
+                let key = AllKeyEvent.up_down();
                 let w = Map1.getSize().width;
                 // cam moving around (press space to back to current follower) (char1)
                 if(key.a){
-                    this.x > 0 ? this.x -= constant.speed : this.x = 0;
-                    this.side = constant.side.lookLeft;
+                    this.x > 0 ? this.x -= char_constant.speed : this.x = 0;
+                    this.side = char_constant.side.lookLeft;
                 }
                 if(key.d){
-                    this.x < w ? this.x += constant.speed : this.x = w
-                    this.side = constant.side.lookRight;
+                    this.x < w ? this.x += char_constant.speed : this.x = w
+                    this.side = char_constant.side.lookRight;
                 }
             }
         }
 
         let char_position_x = 0;
         let char_position_y = 0;
+        // todo can move this to input_event ?
+        // todo: it can have bug ;-;
         this.setCamFollow = function (){
             if(!Movements.isCamFollowing()) {
                 return;
@@ -84,12 +93,20 @@ class Char1 {
             char_position_y = this.y - camSize.height / 2; // cam follow
             // cam_position[0] is x direction
             if(cam_position[0] >= 0 && cam_position[0] <= Map1.getSize().width - camSize.width && Math.abs(cam_position[0] - char_position_x) > 10){
-                cam_position[0] += (char_position_x - cam_position[0]) / constant.follow_speed; // make cam flow the current characters
+                cam_position[0] += (char_position_x - cam_position[0]) / char_constant.follow_speed; // make cam flow the current characters
             }
             if(cam_position[1] >= 0 && cam_position[1] <= Map1.getSize().height - camSize.height && Math.abs(cam_position[1] - char_position_y) > 10){
-                cam_position[1] += (char_position_y - cam_position[1]) / constant.follow_speed;
+                cam_position[1] += (char_position_y - cam_position[1]) / char_constant.follow_speed;
             }
             camera.setPosition(cam_position[0], cam_position[1]);
+        }
+
+        this.fireEvent = function () {
+            let event = FireEvent.get();
+            // todo: count accumulation
+            if(event === fire_status.firing) {
+                this.gun.fire();
+            }
         }
     }
 }

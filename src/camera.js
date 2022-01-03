@@ -11,7 +11,7 @@ const camera = function(){
 
     let cam_x = 500;
     let cam_y = 500;
-    let cam_move_s = 10;
+    let cam_move_s = 20;
     attr.update = function () {
         if(Movements.isCamMoving()) {
             let key = AllKeyEvent.up_down()

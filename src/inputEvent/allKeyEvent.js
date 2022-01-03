@@ -6,15 +6,20 @@ const AllKeyEvent = function (){
 
   onkeydown = d => {
     evt_up_down[d.key.toLowerCase()] = 1;
-    evt_down[d.key] = !evt_down[d.key];
+    evt_down[d.key] = !evt_down[d.key]; // it seem unused
     outerKeyDownFunction(d.key.toLowerCase());
   }
   onkeyup = d => evt_up_down[d.key.toLowerCase()] = 0;
 
+  // !important
+  // this use to call outer function
   function outerKeyDownFunction(key) {
       Movements.setEvent(key);
+      FireEvent.setKey(key);
   }
 
+  // !important
+  // this use to call outer function
   function outerKeyUpFunction() {
 
   }

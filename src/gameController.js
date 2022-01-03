@@ -10,7 +10,9 @@ const gameController = function(){
         character: null
     };
 
-    let char = new Char1(700, 1500, 10, 10);
+    let char = new Char(700, 1500, 10, 10);
+    let gun = new Gun1(char.x, char.y, char.w, char.h);
+    char.setGun(gun);
     function update(){
         camera.update();
         camera.clear();

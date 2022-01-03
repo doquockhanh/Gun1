@@ -1,4 +1,4 @@
-const Status = {
+const texture_status = {
     DESTROYED: 0,
     INTACT: 1,
 }
@@ -8,7 +8,7 @@ class Texture {  // is 1px of map
         this.y = y;
         this.w = size;
         this.h = size;
-        this.status = Status.INTACT;
+        this.status = texture_status.INTACT;
     }
 }
 
@@ -18,7 +18,7 @@ class GroupTexture {  // group texture to optimize draw and collision
         this.y = y;
         this.w = size;
         this.h = size;
-        this.status = Status.INTACT;
+        this.status = texture_status.INTACT;
         this.textTures = [];
     }
 }
