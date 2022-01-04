@@ -4,17 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="914c576a-f72d-4c8c-b81c-5477393a19cf" name="Changes" comment="moving">
-      <change afterPath="$PROJECT_DIR$/src/characters/gun1.js" afterDir="false" />
+    <list default="true" id="914c576a-f72d-4c8c-b81c-5477393a19cf" name="Changes" comment="firing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/camera.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/char1/char1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/char.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/char1/char1_bullets.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/bullet1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/char1/char1_gun.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/bullet1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/bullet1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/char.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/char.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/gun1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/gun1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/inputEvent/allKeyEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/allKeyEvent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/maps/texture.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/texture.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inputEvent/mainFireEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/mainFireEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inputEvent/movements.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/movements.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/maps/map1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/map1.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +98,9 @@
       <workItem from="1641108555653" duration="4143000" />
       <workItem from="1641126893955" duration="5292000" />
       <workItem from="1641171957183" duration="6449000" />
-      <workItem from="1641201661986" duration="10576000" />
+      <workItem from="1641201661986" duration="10813000" />
+      <workItem from="1641261629720" duration="9890000" />
+      <workItem from="1641295270690" duration="8669000" />
     </task>
     <task id="LOCAL-00001" summary="moving">
       <created>1641110206115</created>
@@ -107,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641110206115</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="firing">
+      <created>1641220535067</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1641220535067</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +136,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="moving" />
-    <option name="LAST_COMMIT_MESSAGE" value="moving" />
+    <MESSAGE value="firing" />
+    <option name="LAST_COMMIT_MESSAGE" value="firing" />
   </component>
 </project>

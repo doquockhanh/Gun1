@@ -10,7 +10,7 @@ const char_constant = {
         lookRight: 0.7,
     },
     fall_speed: 6,
-    follow_speed: 20,
+    follow_speed: 15,
 };
 
 class Char {
@@ -31,9 +31,9 @@ class Char {
             let context = camera.getCam();
             let camPosition = camera.getPositions();
             context.fillStyle = "rgb(0, 255, 0, 0.6)"
-            let x = this.x - camPosition[0];
-            let y = this.y - camPosition[1];
-            context.fillRect(x, y, this.w, this.h);
+            let x = this.x - camPosition.x;
+            let y = this.y - camPosition.y;
+            context.fillRect(x - this.w / 2, y, this.w, this.h);
         }
 
         this.update = function () {
@@ -49,8 +49,10 @@ class Char {
             let textures = Map1.getTextures();
             let is_collision = true;
             for (const texture of textures) {
+                if (texture.status === texture_status.DESTROYED) continue
                 if(Collisions.two_square(this, texture) === false){
                     is_collision = false;
+                    this.y = texture.y - this.h;
                     break;
                 }
             }
@@ -87,18 +89,9 @@ class Char {
                 return;
             }
             let camSize = camera.getCanvas();
-            let cam_position = camera.getPositions(); // current cam position
-
             char_position_x = this.x - camSize.width / 2 * this.side; // position need
             char_position_y = this.y - camSize.height / 2; // cam follow
-            // cam_position[0] is x direction
-            if(cam_position[0] >= 0 && cam_position[0] <= Map1.getSize().width - camSize.width && Math.abs(cam_position[0] - char_position_x) > 10){
-                cam_position[0] += (char_position_x - cam_position[0]) / char_constant.follow_speed; // make cam flow the current characters
-            }
-            if(cam_position[1] >= 0 && cam_position[1] <= Map1.getSize().height - camSize.height && Math.abs(cam_position[1] - char_position_y) > 10){
-                cam_position[1] += (char_position_y - cam_position[1]) / char_constant.follow_speed;
-            }
-            camera.setPosition(cam_position[0], cam_position[1]);
+            Movements.setCamFollow(char_position_x, char_position_y);
         }
 
         this.fireEvent = function () {

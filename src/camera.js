@@ -26,8 +26,11 @@ const camera = function(){
     }
         
     attr.getPositions = function() {
-        return [cam_x, cam_y];
-    }
+        return {
+            x: cam_x,
+            y: cam_y,
+        }
+    };
 
     attr.setPosition = function(x, y) {
         cam_x = x;

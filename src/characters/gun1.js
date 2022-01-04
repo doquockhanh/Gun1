@@ -7,9 +7,9 @@ const gun1_constant = {
 
 class Gun1 {
     constructor(x, y, w, h) {
-        this.tail_x = x; // now this is absolute position
+        this.tail_x = x;
         this.tail_y = y;
-        this.head_x = null; // now this is relative position (with cam position)
+        this.head_x = null;
         this.head_y = null;
         this.angle = 240;
         this.current_side = char_constant.side.lookLeft;
@@ -25,8 +25,8 @@ class Gun1 {
         }
 
         this.setPosition = function (x, y) {
-            this.tail_x = x + this.w/2;
-            this.tail_y = y + this.h/3;
+            this.tail_x = x;
+            this.tail_y = y + this.w/3;
         }
 
         this.change_angle = function (side) {  // this chang angle of gun
@@ -57,14 +57,16 @@ class Gun1 {
             let context = camera.getCam();
             let camPosition = camera.getPositions();
             let lineto_position = this.draw_calculator();
-            let x = this.tail_x - camPosition[0];
-            let y = this.tail_y - camPosition[1];
-            this.head_x = x + lineto_position.x;
-            this.head_y = y + lineto_position.y;
+            this.head_x = this.tail_x + lineto_position.x;
+            this.head_y = this.tail_y + lineto_position.y;
+            let x = this.tail_x - camPosition.x;
+            let y = this.tail_y - camPosition.y;
+            let _x = this.head_x - camPosition.x;
+            let _y = this.head_y - camPosition.y;
             // todo: better gun
             context.beginPath();
             context.moveTo(x, y);
-            context.lineTo(this.head_x, this.head_y);
+            context.lineTo(_x, _y);
             context.stroke();
             context.closePath();
         }
@@ -82,9 +84,13 @@ class Gun1 {
         this.fire = function (power) { // call from character
             // todo: when have more bullet, it can choose
             if(!this.bullet) {
-                this.bullet = new Bullet1(this.angle, 100, this.head_x, this.head_y, 0);
+                this.bullet = new Bullet1(this.angle, 200, this.head_x, this.head_y, 0);
             }
             this.bullet.update();
+            if (this.bullet.collision()) { // bullet.collision return true if collision
+                FireEvent.set(fire_status.waiting);
+                this.bullet = null;
+            }
         }
     }
 }

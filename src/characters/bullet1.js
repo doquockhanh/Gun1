@@ -1,7 +1,7 @@
 const bullet_constant = {
     size: {
-        w: 10,
-        h: 10,
+        w: 7,
+        h: 7,
     },
     gravity: 0.1,
     frame: 6/100,
@@ -17,47 +17,58 @@ class Bullet1 {
         this.h = bullet_constant.size.h;
         this.gravity = bullet_constant.gravity;
         this.time = bullet_constant.frame;
-        this.status = texture_status.INTACT;
 
         // initial speed
-        this.vY = -this.power * bullet_constant.frame * Math.sin(this.angle * Math.PI / 180);
-        this.vX = this.power * bullet_constant.frame * Math.cos(this.angle * Math.PI / 180);
+        this.vX = this.power * bullet_constant.frame * Math.sin(this.angle * Math.PI / 180);
+        this.vY = -this.power * bullet_constant.frame * Math.cos(this.angle * Math.PI / 180);
 
         this.update = function () {
-            console.log(this.vY + ", " + this.vX);
             this.time += bullet_constant.frame;
             this.x += this.vX;
             this.y += this.vY;
             this.vY += this.gravity;
             this.vX -= this.time * wind_power;
+            this.setCamFollow();
             this.draw();
-            return this.status; // it help to reset fire_status
-            // this.collision();
-        };
+        }
 
         this.draw = function () {
             let context = camera.getCam();
+            let camera_position = camera.getPositions();
             context.beginPath();
-            context.rect(this.x, this.y, this.w, this.h);
+            context.arc(this.x - camera_position.x, this.y - camera_position.y, this.w, Math.PI * 2, 0);
             context.stroke();
             context.closePath();
         }
 
 
-        this.collision = function () {
+        this.collision = function () { // return true if collision
             let textures = Map1.getTextures();
             let is_collision = true;
             for (const texture of textures) {
+                if (texture.status === texture_status.DESTROYED) continue
                 if(Collisions.two_square(this, texture) === false){
                     is_collision = false;
                     texture.status = texture_status.DESTROYED;
+                    return true;
                 }
             }
-            if(is_collision) {
-                this.y < Map1.getSize().height ? this.y += char_constant.fall_speed : null;
-                this.status = status.inAir;
-            }else {
-                this.status = status.inLand;
+
+            // collision with limit of map
+            let map = gameController.getCurrent().map.getSize();
+            if(this.x >= map.width || this.x <= 0 || this.y >= map.height || this.y <= 0){
+                return true;
+            }
+        }
+
+        let position_x = 0;
+        let position_y = 0;
+        this.setCamFollow = function (){
+            if(FireEvent.get() === fire_status.firing) {
+                let camSize = camera.getCanvas();
+                position_x = this.x - camSize.width / 2; // position need
+                position_y = this.y - camSize.height / 2;// cam follow
+                Movements.setCamFollow(position_x, position_y);
             }
         }
     }
