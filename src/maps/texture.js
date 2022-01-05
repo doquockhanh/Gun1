@@ -19,6 +19,6 @@ class GroupTexture {  // group texture to optimize draw and collision
         this.w = size;
         this.h = size;
         this.status = texture_status.INTACT;
-        this.textTures = [];
+        this.textures = [];
     }
 }

@@ -2,6 +2,7 @@ const bullet_constant = {
     size: {
         w: 7,
         h: 7,
+        r: 7,
     },
     gravity: 0.1,
     frame: 6/100,
@@ -15,6 +16,7 @@ class Bullet1 {
         this.y = y;
         this.w = bullet_constant.size.w;
         this.h = bullet_constant.size.h;
+        this.r = bullet_constant.size.r;
         this.gravity = bullet_constant.gravity;
         this.time = bullet_constant.frame;
 
@@ -43,20 +45,13 @@ class Bullet1 {
 
 
         this.collision = function () { // return true if collision
-            let textures = Map1.getTextures();
-            let is_collision = true;
-            for (const texture of textures) {
-                if (texture.status === texture_status.DESTROYED) continue
-                if(Collisions.two_square(this, texture) === false){
-                    is_collision = false;
-                    texture.status = texture_status.DESTROYED;
-                    return true;
-                }
+            let map = gameController.getCurrent().map;
+            if(map.hard_collision(this)){
+                return true
             }
 
             // collision with limit of map
-            let map = gameController.getCurrent().map.getSize();
-            if(this.x >= map.width || this.x <= 0 || this.y >= map.height || this.y <= 0){
+            if(this.x >= map.getSize().width || this.x <= 0 || this.y >= map.getSize().height || this.y <= 0){
                 return true;
             }
         }

@@ -11,5 +11,21 @@ const Collisions = function(){
         let s2_bottom = obj2.y + obj2.h;
         return (s1_left > s2_right) || (s1_right < s2_left) || (s1_top > s2_bottom) || (s1_bottom < s2_top);
     }
+
+    attr.circle_square = function (circle, square){
+        let circleDistance_x = Math.abs(circle.x - square.x);
+        let circleDistance_y = Math.abs(circle.y - square.y);
+
+        if (circleDistance_x > (square.w/2 + circle.r)) { return false; }
+        if (circleDistance_y > (square.h/2 + circle.r)) { return false; }
+
+        if (circleDistance_x <= (square.w/2)) { return true; }
+        if (circleDistance_y <= (square.h/2)) { return true; }
+
+        let cornerDistance_sq = (circleDistance_x - square.w/2)^2 +
+            (circleDistance_y - square.h/2)^2;
+
+        return (cornerDistance_sq <= (circle.r^2));
+    }
     return attr;
 }()

@@ -33,7 +33,7 @@ class Char {
             context.fillStyle = "rgb(0, 255, 0, 0.6)"
             let x = this.x - camPosition.x;
             let y = this.y - camPosition.y;
-            context.fillRect(x - this.w / 2, y, this.w, this.h);
+            context.fillRect(x, y, this.w, this.h);
         }
 
         this.update = function () {
@@ -46,16 +46,12 @@ class Char {
         }
 
         this.collision = function () {
-            let textures = Map1.getTextures();
+            let map = gameController.getCurrent().map;
             let is_collision = true;
-            for (const texture of textures) {
-                if (texture.status === texture_status.DESTROYED) continue
-                if(Collisions.two_square(this, texture) === false){
-                    is_collision = false;
-                    this.y = texture.y - this.h;
-                    break;
-                }
+            if(map.soft_collision(this)){
+                is_collision = false;
             }
+
             if(is_collision) {
                 this.y < Map1.getSize().height ? this.y += char_constant.fall_speed : null;
                 this.status = status.inAir;

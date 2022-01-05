@@ -25,8 +25,8 @@ class Gun1 {
         }
 
         this.setPosition = function (x, y) {
-            this.tail_x = x;
-            this.tail_y = y + this.w/3;
+            this.tail_x = x + this.w / 2;
+            this.tail_y = y + this.h / 3;
         }
 
         this.change_angle = function (side) {  // this chang angle of gun
@@ -84,7 +84,7 @@ class Gun1 {
         this.fire = function (power) { // call from character
             // todo: when have more bullet, it can choose
             if(!this.bullet) {
-                this.bullet = new Bullet1(this.angle, 200, this.head_x, this.head_y, 0);
+                this.bullet = new Bullet1(this.angle, 280, this.head_x, this.head_y, 0);
             }
             this.bullet.update();
             if (this.bullet.collision()) { // bullet.collision return true if collision
