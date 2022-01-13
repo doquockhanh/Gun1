@@ -5,7 +5,7 @@ app.set('view engine', 'html');
 
 app.use("/src", express.static('./src/'));
 
-app.listen(8080, function () {
+app.listen(process.env.PORT || 8080, function () {
     console.log("app alive");
 });
 
