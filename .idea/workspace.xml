@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="914c576a-f72d-4c8c-b81c-5477393a19cf" name="Changes" comment="bonus collision">
-      <change beforePath="$PROJECT_DIR$/sever.js" beforeDir="false" afterPath="$PROJECT_DIR$/sever.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +33,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../funix/#1/#4asm" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -100,7 +100,7 @@
       <workItem from="1641696627407" duration="1231000" />
       <workItem from="1641995648338" duration="2086000" />
       <workItem from="1642075036534" duration="3116000" />
-      <workItem from="1642079559413" duration="1677000" />
+      <workItem from="1642079559413" duration="3170000" />
     </task>
     <task id="LOCAL-00001" summary="moving">
       <created>1641110206115</created>
