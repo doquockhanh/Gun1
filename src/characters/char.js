@@ -86,7 +86,7 @@ class Char {
             }
             let camSize = camera.getCanvas();
             char_position_x = this.x - camSize.width / 2 * this.side; // position need
-            char_position_y = this.y - camSize.height / 2; // cam follow
+            char_position_y = this.y - camSize.height / 2;            // cam follow
             Movements.setCamFollow(char_position_x, char_position_y);
         }
 

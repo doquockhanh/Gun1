@@ -76,7 +76,12 @@ const Map1 = function(){
         }
     }
 
-    attr.hard_collision = function (obj) {// return true if collision
+    /**
+     * @param obj         obj collision with map
+     * @returns {boolean} return true if collision
+     * hard collision destroy map
+     */
+    attr.hard_collision = function (obj) {
         return _collision(textures, obj, true);
     }
 
