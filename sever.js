@@ -10,6 +10,5 @@ app.listen(process.env.PORT || 8080, function () {
 });
 
 app.get("/", function (req,res){
-    console.log("sever on");
     res.render("index");
 })

@@ -7,13 +7,13 @@ const Map1 = function(){
     //todo: the map, that better to make a draw map function
     for (let x = 600; x < MAP_WIDTH - 600; x += SIZE) {
         for (let y = 1600; y < 1700; y += SIZE) {
-            let groupTexture = new GroupTexture(x, y, SIZE + 0.08);
+            let texture = new Texture(x, y, SIZE + 0.08);
             for (let i = x; i < x + SIZE; i+= 5) {
                 for (let j = y; j < y + SIZE; j+=5) {
-                    groupTexture.textures.push(new Texture(i, j, 5.08));
+                    texture.textures.push(new Texture(i, j, 5.08));
                 }
             }
-            textures.push(groupTexture);
+            textures.push(texture);
         }
     }
 
@@ -22,13 +22,13 @@ const Map1 = function(){
         let camPosition = camera.getPositions();
         context.fillStyle = "rgb(0, 0, 255, 0.6)"
         //todo: create a group of texture to perform drawing
-        textures.forEach(group => {
-            if(group.status === texture_status.INTACT) {
-                let x = group.x - camPosition.x;
-                let y = group.y - camPosition.y;
-                context.fillRect(x, y, group.w, group.h);
+        textures.forEach(texture => {
+            if(texture.status === texture_status.INTACT) {
+                let x = texture.x - camPosition.x;
+                let y = texture.y - camPosition.y;
+                context.fillRect(x, y, texture.w, texture.h);
             }else {
-                group.textures.forEach(texture => {
+                texture.textures.forEach(texture => {
                     if(texture.status === texture_status.INTACT) {
                         let x = texture.x - camPosition.x;
                         let y = texture.y - camPosition.y;
@@ -52,41 +52,46 @@ const Map1 = function(){
         return [[600, 700], [800, 900], [1100, 1200], [1300, 1400]];
     }
 
-    // todo: need refactor
-    function _collision(arr, obj, is_hard){
+    /**
+     * describe: map has so many textures(each 1px), it make game lagged if collision with all them in one time.
+     *           to reduce that, i make a big texture include smaller textures smaller include smallest textures
+     *           when the bigger destroy, the smaller continue to collision
+     * @param arr current textures collision #describle
+     * @param obj
+     * @param is_hard_collision true/false (true destroy map)
+     * @returns {boolean}       true if collided
+     * @private
+     */
+    function _collision(arr, obj, is_hard_collision){
         for (const texture of arr) {
-            if (texture.status === texture_status.DESTROYED) {
-                if(texture.textures){
-                    if(_collision(texture.textures, obj, is_hard)){ // call back
+            if (texture.status === texture_status.INTACT) {
+                if(Collisions.two_square(obj, texture)) {
+                    if (is_hard_collision) texture.status = texture_status.DESTROYED;
+                    if(texture.textures.length !== 0){ // that mean texture include smaller texture
+                        if(_collision(texture.textures, obj, is_hard_collision)){ // call back
+                            return true;
+                        }
+                    }else {
                         return true;
                     }
                 }
-                continue;
-            }
-            if(Collisions.two_square(obj, texture) === false){
-                if(is_hard) texture.status = texture_status.DESTROYED;
-                if(texture.textures){
-                    if(_collision(texture.textures, obj, is_hard)){ // call back
+            }else {
+                if(texture.textures.length !== 0){
+                    if(_collision(texture.textures, obj, is_hard_collision)){ // call back
                         return true;
                     }
-                }else {
-                    return true;
                 }
             }
         }
     }
 
     /**
-     * @param obj         obj collision with map
-     * @returns {boolean} return true if collision
-     * hard collision destroy map
+     * @param obj
+     * @param is_hard_collision  hard collision destroy collided map
+     * @returns {boolean}
      */
-    attr.hard_collision = function (obj) {
-        return _collision(textures, obj, true);
-    }
-
-    attr.soft_collision = function (obj) {
-        return _collision(textures, obj);
+    attr.collision = function (obj, is_hard_collision) {
+        return _collision(textures, obj, is_hard_collision);
     }
 
     attr.getTextures = function () {

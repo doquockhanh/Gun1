@@ -9,16 +9,6 @@ class Texture {  // is 1px of map
         this.w = size;
         this.h = size;
         this.status = texture_status.INTACT;
-    }
-}
-
-class GroupTexture {  // group texture to optimize draw and collision
-    constructor(x, y, size){
-        this.x = x;
-        this.y = y;
-        this.w = size;
-        this.h = size;
-        this.status = texture_status.INTACT;
         this.textures = [];
     }
 }

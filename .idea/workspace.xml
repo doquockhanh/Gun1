@@ -6,6 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="914c576a-f72d-4c8c-b81c-5477393a19cf" name="Changes" comment="bonus collision">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sever.js" beforeDir="false" afterPath="$PROJECT_DIR$/sever.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/camera.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/bullet1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/bullet1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/char.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/char.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/gun1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/gun1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/collisions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/collisions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inputEvent/allKeyEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/keyEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inputEvent/mainFireEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/mainFireEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inputEvent/movements.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/movements.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/maps/map1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/map1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/maps/texture.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/texture.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +112,12 @@
       <workItem from="1641696627407" duration="1231000" />
       <workItem from="1641995648338" duration="2086000" />
       <workItem from="1642075036534" duration="3116000" />
-      <workItem from="1642079559413" duration="3170000" />
+      <workItem from="1642079559413" duration="4662000" />
+      <workItem from="1642121686791" duration="756000" />
+      <workItem from="1642163692171" duration="1165000" />
+      <workItem from="1642165252800" duration="468000" />
+      <workItem from="1642166032210" duration="596000" />
+      <workItem from="1642208486426" duration="4820000" />
     </task>
     <task id="LOCAL-00001" summary="moving">
       <created>1641110206115</created>

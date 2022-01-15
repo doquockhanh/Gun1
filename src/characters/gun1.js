@@ -31,7 +31,7 @@ class Gun1 {
 
         this.change_angle = function (side) {  // this chang angle of gun
             if(Movements.isCamFollowing()) {
-                let key = AllKeyEvent.up_down();
+                let key = KeyEvent.up_down();
                 if(this.current_side !== side) { // change angle when char move left and right
                     this.angle = 360 - this.angle;
                     this.current_side = side;
@@ -77,7 +77,7 @@ class Gun1 {
             let y = Math.cos(angle) * this.length;
             return {
                 x: x,
-                y: -y, // this can be a diff from canvas angle and normal
+                y: -y, // different from canvas angle and math angle
             };
         }
 

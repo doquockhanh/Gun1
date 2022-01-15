@@ -1,4 +1,4 @@
-const AllKeyEvent = function (){
+const KeyEvent = function (){
   const attr = {};
 
   let evt_up_down = {w: 0, s: 0, a: 0, d: 0};
@@ -34,12 +34,5 @@ const AllKeyEvent = function (){
     return evt_down
   };
 
-  attr.set_up_down = function (a) { // a like the current array
-    evt_up_down = a;
-  }
-
-  attr.set_down = function (a) { // a like the current array
-    evt_down = a;
-  }
   return attr;
 }()

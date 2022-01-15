@@ -46,7 +46,7 @@ class Bullet1 {
 
         this.collision = function () { // return true if collision
             let map = gameController.getCurrent().map;
-            if(map.hard_collision(this)){
+            if(map.collision(this, true)){
                 return true
             }
 

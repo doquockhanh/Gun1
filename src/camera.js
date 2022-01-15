@@ -14,7 +14,7 @@ const camera = function(){
     let cam_move_s = 20;
     attr.update = function () {
         if(Movements.isCamMoving()) {
-            let key = AllKeyEvent.up_down()
+            let key = KeyEvent.up_down()
             let w = Map1.getSize().width - canvas.width;
             let h = Map1.getSize().height - canvas.height;
             // cam moving around (press space to back to current follower) (char1)

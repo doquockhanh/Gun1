@@ -25,7 +25,7 @@ class Char {
         this.setGun = function (gun) {
             this.gun = gun;
         }
-        this.power = 0; // it is power of bullet, but put here... hmm
+        this.power = 0;
 
         this.draw = function () {
             let context = camera.getCam();
@@ -48,7 +48,7 @@ class Char {
         this.collision = function () {
             let map = gameController.getCurrent().map;
             let is_collision = true;
-            if(map.soft_collision(this)){
+            if(map.collision(this, false)){
                 is_collision = false;
             }
 
@@ -62,7 +62,7 @@ class Char {
 
         this.move = function() {
             if(Movements.isCamFollowing() && this.status === status.inLand) {
-                let key = AllKeyEvent.up_down();
+                let key = KeyEvent.up_down();
                 let w = Map1.getSize().width;
                 // cam moving around (press space to back to current follower) (char1)
                 if(key.a){
@@ -78,8 +78,6 @@ class Char {
 
         let char_position_x = 0;
         let char_position_y = 0;
-        // todo can move this to input_event ?
-        // todo: it can have bug ;-;
         this.setCamFollow = function (){
             if(!Movements.isCamFollowing()) {
                 return;

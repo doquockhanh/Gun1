@@ -1,7 +1,7 @@
 const fire_status = {
     waiting: 0,
     accumulation: 1,
-    firing: 2, // end firing back to status waiting
+    firing: 2, // end status firing back to status waiting
 }
 
 /**
@@ -13,7 +13,7 @@ const fire_status = {
 const FireEvent = function (){
     const attr = {};
 
-    const fireEvent = {f: fire_status.waiting}; // 1 is active
+    const fireEvent = {f: fire_status.waiting};
 
     attr.setKey = function (key, down) {
         if(fireEvent.hasOwnProperty(key) && fireEvent.f !== fire_status.firing){
