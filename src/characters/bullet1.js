@@ -1,10 +1,10 @@
 const bullet_constant = {
     size: {
-        w: 7,
-        h: 7,
-        r: 7,
+        w: 1,
+        h: 1,
+        r: 10,
     },
-    gravity: 0.1,
+    gravity: 0.3,
     frame: 6/100,
 }
 
@@ -38,7 +38,7 @@ class Bullet1 {
             let context = camera.getCam();
             let camera_position = camera.getPositions();
             context.beginPath();
-            context.arc(this.x - camera_position.x, this.y - camera_position.y, this.w, Math.PI * 2, 0);
+            context.arc(this.x - camera_position.x, this.y - camera_position.y, this.r - 3, Math.PI * 2, 0);
             context.stroke();
             context.closePath();
         }

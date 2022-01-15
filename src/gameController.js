@@ -16,7 +16,7 @@ const gameController = function(){
     function update(){
         camera.update();
         camera.clear();
-        Map1.drawMap1();
+        Map1.update();
         char.update();
         if(GAME_STATUS.GAME_PLAYING === 1){
             return;

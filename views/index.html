@@ -10,10 +10,23 @@
             margin: 0;
             padding: 0;
         }
+        canvas{
+            position: absolute;
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
+    <button onclick="showHideHelpList()">show/hide help list</button>
+    <ul id="helpList">
+        <li>move around: a, d</li>
+        <li>change gun angle: s, w</li>
+        <li>turn on camera: c</li>
+        <li>move camera around: a, d, s, w</li>
+        <li>turn off camera: space</li>
+        <li>fire: f</li>
+    </ul>
     <script src="../src/characters/bullet1.js"></script>
     <script src="../src/characters/gun1.js"></script>
     <script src="../src/inputEvent/movements.js"></script>

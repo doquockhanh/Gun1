@@ -27,7 +27,7 @@ const Movements = function (){
      * @param f_x position x need to follow
      * @param f_y position y need to follow
      */
-    let stop_follow = 5; // stop_follow let cam follow near the obj
+    let stop_follow = 0; // stop_follow let cam follow near the obj
     attr.setCamFollow = function (f_x, f_y) {
         let map = gameController.getCurrent().map.getSize();
         let camSize = camera.getCanvas();

@@ -1,40 +1,56 @@
 const Map1 = function(){
-    const SIZE = 50;
+    const SIZE = {
+        min: 1,
+        medium: 5,
+        max: 50,
+    };
     const MAP_WIDTH = 2000;
     const MAP_HEIGHT = 2000;
     let attr = {};
     let textures = [];
     //todo: the map, that better to make a draw map function
-    for (let x = 600; x < MAP_WIDTH - 600; x += SIZE) {
-        for (let y = 1600; y < 1700; y += SIZE) {
-            let texture = new Texture(x, y, SIZE + 0.08);
-            for (let i = x; i < x + SIZE; i+= 5) {
-                for (let j = y; j < y + SIZE; j+=5) {
-                    texture.textures.push(new Texture(i, j, 5.08));
+    for (let x = 600; x < MAP_WIDTH - 600; x += SIZE.max) {
+        for (let y = 1600; y < 1700; y +=  SIZE.max) {
+            let big_texture = new Texture(x, y,  SIZE.max);
+            for (let i = x; i < x +  SIZE.max; i+= SIZE.medium) {
+                for (let j = y; j < y + SIZE.max; j+= SIZE.medium) {
+                    let medium_texture = new Texture(i, j,  SIZE.medium);
+                    for (let k = i; k < i +  SIZE.medium; k+= SIZE.min) {
+                        for (let l = j; l < j + SIZE.medium; l+= SIZE.min) {
+                            medium_texture.textures.push(new Texture(k, l, SIZE.min));
+                        }
+                    }
+                    big_texture.textures.push(medium_texture);
                 }
             }
-            textures.push(texture);
+            textures.push(big_texture);
         }
     }
 
-    attr.drawMap1 = function(){
+    attr.update = function () {
+        drawMap1(textures);
+    }
+
+    /**
+     * describe: map has so many textures(each 2px), it make game lagged if draw all them in one time.
+     *           to reduce that, i make a big texture include smaller textures smaller include smallest textures
+     *           when the bigger destroy, the smaller continue to draw
+     * @param arr current textures draw #describle
+     */
+    function drawMap1(arr){
         let context = camera.getCam();
         let camPosition = camera.getPositions();
-        context.fillStyle = "rgb(0, 0, 255, 0.6)"
-        //todo: create a group of texture to perform drawing
-        textures.forEach(texture => {
+        context.fillStyle = "rgb(0, 0, 255, 0.6)";
+        arr.forEach(texture => {
             if(texture.status === texture_status.INTACT) {
                 let x = texture.x - camPosition.x;
                 let y = texture.y - camPosition.y;
                 context.fillRect(x, y, texture.w, texture.h);
             }else {
-                texture.textures.forEach(texture => {
-                    if(texture.status === texture_status.INTACT) {
-                        let x = texture.x - camPosition.x;
-                        let y = texture.y - camPosition.y;
-                        context.fillRect(x, y, texture.w, texture.h);
-                    }
-                })
+                if(texture.textures.length !== 0){
+                    drawMap1(texture.textures); // call back
+                }
+
             }
         });
     }
@@ -53,7 +69,7 @@ const Map1 = function(){
     }
 
     /**
-     * describe: map has so many textures(each 1px), it make game lagged if collision with all them in one time.
+     * describe: map has so many textures(each 2px), it make game lagged if collision with all them in one time.
      *           to reduce that, i make a big texture include smaller textures smaller include smallest textures
      *           when the bigger destroy, the smaller continue to collision
      * @param arr current textures collision #describle
@@ -66,7 +82,9 @@ const Map1 = function(){
         for (const texture of arr) {
             if (texture.status === texture_status.INTACT) {
                 if(Collisions.two_square(obj, texture)) {
-                    if (is_hard_collision) texture.status = texture_status.DESTROYED;
+                    if (is_hard_collision) { // hard collision is bullet and map collided;
+                        bulletDestroyMap(obj, textures);
+                    }
                     if(texture.textures.length !== 0){ // that mean texture include smaller texture
                         if(_collision(texture.textures, obj, is_hard_collision)){ // call back
                             return true;
@@ -80,6 +98,23 @@ const Map1 = function(){
                     if(_collision(texture.textures, obj, is_hard_collision)){ // call back
                         return true;
                     }
+                }
+            }
+        }
+    }
+
+    function bulletDestroyMap(obj, arr) {
+        for (const texture of arr) {
+            if (texture.status === texture_status.INTACT) {
+                if(Collisions.circle_square(obj, texture)) {
+                    texture.status = texture_status.DESTROYED;
+                    if(texture.textures.length !== 0){ // that mean texture include smaller texture
+                        bulletDestroyMap(obj, texture.textures)// call back
+                    }
+                }
+            }else {
+                if(texture.textures.length !== 0){
+                    bulletDestroyMap(obj, texture.textures) // call back
                 }
             }
         }

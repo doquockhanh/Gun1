@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="914c576a-f72d-4c8c-b81c-5477393a19cf" name="Changes" comment="bonus collision">
+    <list default="true" id="914c576a-f72d-4c8c-b81c-5477393a19cf" name="Changes" comment="refactor, comment code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sever.js" beforeDir="false" afterPath="$PROJECT_DIR$/sever.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/camera.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/camera.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/characters/bullet1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/bullet1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/char.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/char.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/characters/gun1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/gun1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/collisions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/collisions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inputEvent/allKeyEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/keyEvent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inputEvent/mainFireEvent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/mainFireEvent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/inputEvent/movements.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputEvent/movements.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/maps/map1.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/map1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/maps/texture.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/maps/texture.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +112,7 @@
       <workItem from="1642163692171" duration="1165000" />
       <workItem from="1642165252800" duration="468000" />
       <workItem from="1642166032210" duration="596000" />
-      <workItem from="1642208486426" duration="4820000" />
+      <workItem from="1642208486426" duration="11879000" />
     </task>
     <task id="LOCAL-00001" summary="moving">
       <created>1641110206115</created>
@@ -147,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641390261827</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactor, comment code">
+      <created>1642213533162</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1642213533162</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,6 +172,7 @@
     <MESSAGE value="firing" />
     <MESSAGE value="correct firing and collision" />
     <MESSAGE value="bonus collision" />
-    <option name="LAST_COMMIT_MESSAGE" value="bonus collision" />
+    <MESSAGE value="refactor, comment code" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor, comment code" />
   </component>
 </project>
