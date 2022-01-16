@@ -9,6 +9,6 @@ class Texture {  // is 1px of map
         this.w = size;
         this.h = size;
         this.status = texture_status.INTACT;
-        this.textures = [];
+        this.textures = null;
     }
 }

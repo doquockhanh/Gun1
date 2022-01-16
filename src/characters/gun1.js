@@ -11,7 +11,7 @@ class Gun1 {
         this.tail_y = y;
         this.head_x = null;
         this.head_y = null;
-        this.angle = 240;
+        this.angle = 315;
         this.current_side = char_constant.side.lookLeft;
         this.length = 10;
         this.w = w;

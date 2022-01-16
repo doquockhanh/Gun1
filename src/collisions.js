@@ -14,20 +14,36 @@ const Collisions = function(){
         return !((s1_left > s2_right) || (s1_right < s2_left) || (s1_top > s2_bottom) || (s1_bottom < s2_top));
     }
 
+    // return true if collided
     attr.circle_square = function (circle, square){
-        let circleDistance_x = Math.abs(circle.x - square.x);
-        let circleDistance_y = Math.abs(circle.y - square.y);
+            let testX = circle.x;
+            let testY = circle.y;
 
-        if (circleDistance_x > (square.w/2 + circle.r)) { return false; }
-        if (circleDistance_y > (square.h/2 + circle.r)) { return false; }
+            // which edge is closest?
+            if (circle.x < square.x){
+                testX = square.x                  // left edge
+            }else if (circle.x > square.x + square.w) {
+                testX = square.x + square.w       // right edge
+            }
 
-        if (circleDistance_x <= (square.w/2)) { return true; }
-        if (circleDistance_y <= (square.h/2)) { return true; }
+            if (circle.y < square.y){
+                testY = square.y                  // top edge
+            }else if (circle.y > square.y + square.h){
+                testY = square.y + square.h       // bottom edge
+            }
 
-        let cornerDistance_sq = (circleDistance_x - square.w/2)^2 +
-            (circleDistance_y - square.h/2)^2;
+            // // get distance from closest edges
+            let distance = getDistance(circle.x,circle.y,testX,testY)
 
-        return (cornerDistance_sq <= (circle.r^2));
+            // if the distance is less than the radius, collision!
+            return distance <= circle.r;
     }
+
+    function getDistance(x1, y1, x2, y2){
+        let d_x = Math.abs(x1 - x2);
+        let d_y = Math.abs(y1 - y2);
+        return Math.sqrt(d_x * d_x + d_y * d_y);
+    }
+
     return attr;
 }()

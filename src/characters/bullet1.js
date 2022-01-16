@@ -38,7 +38,7 @@ class Bullet1 {
             let context = camera.getCam();
             let camera_position = camera.getPositions();
             context.beginPath();
-            context.arc(this.x - camera_position.x, this.y - camera_position.y, this.r - 3, Math.PI * 2, 0);
+            context.arc(this.x - camera_position.x, this.y - camera_position.y, this.r - 5, Math.PI * 2, 0);
             context.stroke();
             context.closePath();
         }

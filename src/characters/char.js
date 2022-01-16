@@ -20,7 +20,7 @@ class Char {
         this.w = width;
         this.h = height;
         this.status = status.inAir; // when characters drop, it cant move
-        this.side = char_constant.side.lookLeft; // characters move left/right will look at left/right side
+        this.side = char_constant.side.lookRight; // characters move left/right will look at left/right side
         this.gun = null;
         this.setGun = function (gun) {
             this.gun = gun;
