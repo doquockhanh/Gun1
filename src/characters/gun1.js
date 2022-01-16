@@ -68,6 +68,20 @@ class Gun1 {
             context.moveTo(x, y);
             context.lineTo(_x, _y);
             context.stroke();
+
+            // draw angle number
+            let shape = Draw.getAngleShape();
+            let text;
+            this.current_side === char_constant.side.lookLeft ?
+                text = (this.angle % 181 + 1) - 90 :
+                text = (this.angle % 180 - 90) * -1;
+            context.font = "1em arial";
+            context.fillText(
+                text + "",
+                shape.p_x - context.measureText(text + "").width / 2,
+                shape.p_y + context.measureText("ok").width / 3,
+            );
+
             context.closePath();
         }
 
@@ -82,9 +96,10 @@ class Gun1 {
         }
 
         this.fire = function (power) { // call from character
+
             // todo: when have more bullet, it can choose
             if(!this.bullet) {
-                this.bullet = new Bullet1(this.angle, 150, this.head_x, this.head_y, 0);
+                this.bullet = new Laze(this.angle, power, this.head_x, this.head_y, gameController.getWindPower());
             }
             this.bullet.update();
             if (this.bullet.collision()) { // bullet.collision return true if collision

@@ -73,10 +73,15 @@ const Map1 = function(){
     /**
      * @param obj
      * @param is_hard_collision  hard collision destroy collided map
-     * @returns {boolean}
+     * @returns {boolean} (hard)
+     * @returns {{x, y}} (soft)
      */
     attr.collision = function (obj, is_hard_collision) {
-        return _collision(textures, obj, is_hard_collision);
+        if(is_hard_collision) {
+            return hard_collision(textures, obj);
+        }else {
+            return soft_collision(textures, obj);
+        }
     }
 
     /**
@@ -85,33 +90,54 @@ const Map1 = function(){
      *           when the bigger destroy, the smaller continue to collision
      * @param arr current textures collision #describle
      * @param obj
-     * @param is_hard_collision true/false (true destroy map)
      * @returns {boolean}       true if collided
      * @private
+     * hard collision destroy map
      */
-    // todo: need refactor;
-    function _collision(arr, obj, is_hard_collision){
+    function hard_collision(arr, obj){
         for (const texture of arr) {
             if (texture.status === texture_status.INTACT) {
                 if(Collisions.two_square(obj, texture)) {
-                    if (is_hard_collision) { // hard collision is bullet and map collided;
-                        bulletDestroyMap(obj, textures);
-                        if(texture.textures){ // that mean texture include smaller texture
-                            _collision(texture.textures, obj, is_hard_collision);
-                        }else {
-                            arr.splice(arr.indexOf(texture), 1);
-                        }
-                        return true;
-                    }
+                    bulletDestroyMap(obj, textures);
                     if(texture.textures){ // that mean texture include smaller texture
-                        _collision(texture.textures, obj, is_hard_collision);
+                        hard_collision(texture.textures, obj);
+                    }else {
+                        arr.splice(arr.indexOf(texture), 1);
                     }
                     return true;
                 }
             }else {
                 if(texture.textures){
-                    if(_collision(texture.textures, obj, is_hard_collision)){ // call back
+                    if(hard_collision(texture.textures, obj)){ // call back
                         return true;
+                    }
+                }else {
+                    arr.splice(arr.indexOf(texture), 1);
+                }
+            }
+        }
+    }
+
+    /**
+     * describe: map has so many textures(each 1px), it make game lagged if collision with all them in one time.
+     *           to reduce that, i make a big texture include smaller textures smaller include smallest textures
+     *           when the bigger destroy, the smaller continue to collision
+     * @param arr current textures collision #describle
+     * @param obj
+     * @returns {{x, y}} position of collided texture
+     * @private
+     */
+    function soft_collision(arr, obj){
+        for (const texture of arr) {
+            if (texture.status === texture_status.INTACT) {
+                if(Collisions.two_square(obj, texture)) {
+                    return {x: texture.x, y: texture.y};
+                }
+            }else {
+                if(texture.textures){
+                    let result = soft_collision(texture.textures, obj)
+                    if(result){ // call back
+                        return {x: texture.x, y: texture.y};
                     }
                 }else {
                     arr.splice(arr.indexOf(texture), 1);

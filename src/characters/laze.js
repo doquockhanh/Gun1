@@ -1,4 +1,4 @@
-const bullet_constant = {
+const laze_constant = {
     size: {
         w: 1,
         h: 1,
@@ -6,30 +6,53 @@ const bullet_constant = {
     },
     gravity: 0.25,
     frame: 6/100,
+    v: 5,
 }
 
-class Bullet1 {
+class Laze {
     constructor(angle, power, x, y, wind_power) {
         this.power = power;
         this.angle = angle;
         this.x = x;
         this.y = y;
-        this.w = bullet_constant.size.w;
-        this.h = bullet_constant.size.h;
-        this.r = bullet_constant.size.r;
-        this.gravity = bullet_constant.gravity;
-        this.time = bullet_constant.frame;
+        this.w = laze_constant.size.w;
+        this.h = laze_constant.size.h;
+        this.r = laze_constant.size.r;
+        this.gravity = laze_constant.gravity;
+        this.time = laze_constant.frame;
 
         // initial speed
-        this.vX = this.power * bullet_constant.frame * Math.sin(this.angle * Math.PI / 180);
-        this.vY = -this.power * bullet_constant.frame * Math.cos(this.angle * Math.PI / 180);
+        this.vX = this.power * laze_constant.frame * Math.sin(this.angle * Math.PI / 180);
+        this.vY = -this.power * laze_constant.frame * Math.cos(this.angle * Math.PI / 180);
 
+        let distance;
+        let symmetry_point;
+        let d_x = 0;
+        let d_y = 0;
         this.update = function () {
-            this.time += bullet_constant.frame;
-            this.x += this.vX;
-            this.y += this.vY;
-            this.vY += this.gravity;
-            this.vX -= this.time * wind_power;
+            if(this.vY < 2) {
+                this.time += laze_constant.frame;
+                this.x += this.vX;
+                this.y += this.vY;
+                this.vY += this.gravity;
+                this.vX -= this.time * wind_power;
+                this.a = this.x;
+            }else {
+                let char = gameController.getCurrent().character;
+                if(!distance) distance = Math.abs(char.x - this.x);
+
+                if(!symmetry_point) {
+                    symmetry_point = {
+                        x: this.x + distance,
+                        y: char.y + char.h
+                    }
+                    d_x = Math.abs(symmetry_point.x - this.x);
+                    d_y = Math.abs(symmetry_point.y - this.y);
+                }
+                if(symmetry_point.x > char.x) this.x += (d_x / d_y) * laze_constant.v;
+                else this.x -= (d_x / d_y) * laze_constant.v;
+                this.y += ((d_x / d_y) * laze_constant.v) * d_y / d_x;
+            }
             this.setCamFollow();
             this.draw();
         }

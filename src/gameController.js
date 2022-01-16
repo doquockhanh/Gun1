@@ -1,3 +1,7 @@
+const gameController_constant = {
+    wind_range: 0.03,
+}
+
 const gameController = function(){
     let attr = {};
     const GAME_STATUS = {
@@ -9,6 +13,8 @@ const gameController = function(){
         map: null,
         character: null
     };
+    let win_power = Math.random() * gameController_constant.wind_range
+        - Math.random() * gameController_constant.wind_range;
 
     let char = new Char(700, 1500, 10, 10);
     let gun = new Gun1(char.x, char.y, char.w, char.h);
@@ -18,6 +24,7 @@ const gameController = function(){
         camera.clear();
         Map1.update();
         char.update();
+        Draw.draw();
         if(GAME_STATUS.GAME_PLAYING === 1){
             return;
         }
@@ -26,11 +33,21 @@ const gameController = function(){
 
     attr.start = function(){
         current.map = Map1;
+        current.character = char;
         update();
     }
 
     attr.getCurrent = function (){
         return current;
+    }
+
+    attr.getWindPower = function () {
+        return win_power;
+    }
+
+    attr.changeWinPower = function () {
+        win_power = Math.random() * gameController_constant.wind_range
+            - Math.random() * gameController_constant.wind_range;
     }
 
     return attr;
