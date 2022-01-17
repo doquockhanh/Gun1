@@ -1,13 +1,16 @@
-const status = {
+const char_status = {
     inAir: 0,
-    inLand: 1
+    inLand: 1,
+    waiting: 2,
+    dead: 3,
 }
 
 const char_constant = {
-    speed: 2,
+    speed: 1,
+    //todo: look left/right is remove in cam following, add again later
     side: {
-        lookLeft: 1.3,
-        lookRight: 0.7,
+        lookLeft: 0,
+        lookRight: 1,
     },
     fall_speed: 6,
     follow_speed: 15,
@@ -20,7 +23,7 @@ class Char {
         this.y = y;
         this.w = width;
         this.h = height;
-        this.status = status.inAir; // when characters drop, it cant move
+        this.status = char_status.waiting; // when characters drop, it cant move
         this.side = char_constant.side.lookRight; // characters move left/right will look at left/right side
         this.gun = null;
         this.setGun = function (gun) {
@@ -40,20 +43,23 @@ class Char {
             // draw power
             let shape = Draw.getPowerShape();
             context.fillStyle = "rgb(255, 0, 0, 0.6)";
-            console.log("power" + (this.power * (shape.w / this.power)));
-            console.log("shape" + shape.w);
             context.fillRect(shape.p_x, shape.p_y, this.power * (shape.w / char_constant.max_power), shape.h);
 
             context.closePath();
         }
 
         this.update = function () {
+            if(this.status === char_status.dead) return;
             this.collision();
-            this.setCamFollow();
-            this.gun.update(this.side, this.x, this.y, this.w, this.h);
+            if(this.status === char_status.inLand ||
+                this.status === char_status.inLand
+            ){
+                this.setCamFollow();
+                this.gun.update(this.side, this.x, this.y, this.w, this.h);
+                this.move();
+                this.fireEvent();
+            }
             this.draw();
-            this.move();
-            this.fireEvent();
         }
 
         this.collision = function () {
@@ -64,15 +70,15 @@ class Char {
             }
 
             if(is_collision) {
-                this.y < Map1.getSize().height ? this.y += char_constant.fall_speed : null;
-                this.status = status.inAir;
+                this.y < Map1.getSize().height ? this.y += char_constant.fall_speed : this.status = char_status.dead;
+                if(this.status === char_status.inLand) this.status = char_status.inAir;
             }else {
-                this.status = status.inLand;
+                if(this.status === char_status.inAir) this.status = char_status.inLand;
             }
         }
 
         this.move = function() {
-            if(Movements.isCamFollowing() && this.status === status.inLand) {
+            if(Movements.isCamFollowing() && this.status === char_status.inLand) {
                 let key = KeyEvent.up_down();
                 let w = Map1.getSize().width;
                 if(key.a){
@@ -93,7 +99,7 @@ class Char {
                 return;
             }
             let camSize = camera.getCanvas();
-            char_position_x = this.x - camSize.width / 2 * this.side; // position need
+            char_position_x = this.x - camSize.width / 2; // position need
             char_position_y = this.y - camSize.height / 2;            // cam follow
             Movements.setCamFollow(char_position_x, char_position_y);
         }

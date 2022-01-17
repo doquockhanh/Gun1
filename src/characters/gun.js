@@ -1,11 +1,11 @@
-const gun1_constant = {
+const gun_constant = {
     limitAngle: {
         leftSide: 225,
         rightSide: 135
     }
 }
 
-class Gun1 {
+class Gun {
     constructor(x, y, w, h) {
         this.tail_x = x;
         this.tail_y = y;
@@ -45,9 +45,9 @@ class Gun1 {
                 }
                 if(key.s){
                     if(side === char_constant.side.lookLeft){ // down event
-                        this.angle > gun1_constant.limitAngle.leftSide && this.angle--;
+                        this.angle > gun_constant.limitAngle.leftSide && this.angle--;
                     }else {
-                        this.angle < gun1_constant.limitAngle.rightSide && this.angle++;
+                        this.angle < gun_constant.limitAngle.rightSide && this.angle++;
                     }
                 }
             }
@@ -96,14 +96,13 @@ class Gun1 {
         }
 
         this.fire = function (power) { // call from character
-
             // todo: when have more bullet, it can choose
             if(!this.bullet) {
-                this.bullet = new Laze(this.angle, power, this.head_x, this.head_y, gameController.getWindPower());
+                this.bullet = new Bullet1(this.angle, power, this.head_x, this.head_y, gameController.getWindPower());
             }
             this.bullet.update();
             if (this.bullet.collision()) { // bullet.collision return true if collision
-                FireEvent.set(fire_status.waiting);
+                FireEvent.set(fire_status.swap_turn);
                 this.bullet = null;
             }
         }

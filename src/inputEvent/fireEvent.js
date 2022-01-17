@@ -1,14 +1,16 @@
 const fire_status = {
     waiting: 0,
     accumulation: 1,
-    firing: 2, // end status firing back to status waiting
+    firing: 2,
+    swap_turn: 3, // after bullet destroy
 }
 
 /**
  * 1: nothing happen when status is waiting, it's so important, only camera can move, every thing stop
  * 2: when hold f, it will accumulation
  * 3: when release f, it will firing (seem everything should be stop except cam follow)
- * 4: when bullet DESTROY, set status waiting
+ * 4: when bullet DESTROY, set status swap_turn
+ * 5: after swap turn set status waiting
 **/
 const FireEvent = function (){
     const attr = {};

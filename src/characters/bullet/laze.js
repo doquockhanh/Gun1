@@ -6,7 +6,7 @@ const laze_constant = {
     },
     gravity: 0.25,
     frame: 6/100,
-    v: 5,
+    v: 10,
 }
 
 class Laze {
@@ -30,26 +30,26 @@ class Laze {
         let d_x = 0;
         let d_y = 0;
         this.update = function () {
-            if(this.vY < 2) {
+            if(this.vY < 0) {
                 this.time += laze_constant.frame;
                 this.x += this.vX;
                 this.y += this.vY;
                 this.vY += this.gravity;
                 this.vX -= this.time * wind_power;
-                this.a = this.x;
             }else {
-                let char = gameController.getCurrent().character;
-                if(!distance) distance = Math.abs(char.x - this.x);
+                let gun = gameController.getCurrent().gun;
+                // gun tail_x/ tail_y if position of gun
+                if(!distance) distance = Math.abs(gun.tail_x - this.x);
 
                 if(!symmetry_point) {
                     symmetry_point = {
                         x: this.x + distance,
-                        y: char.y + char.h
+                        y: gun.tail_y,
                     }
                     d_x = Math.abs(symmetry_point.x - this.x);
                     d_y = Math.abs(symmetry_point.y - this.y);
                 }
-                if(symmetry_point.x > char.x) this.x += (d_x / d_y) * laze_constant.v;
+                if(symmetry_point.x > gun.tail_x) this.x += (d_x / d_y) * laze_constant.v;
                 else this.x -= (d_x / d_y) * laze_constant.v;
                 this.y += ((d_x / d_y) * laze_constant.v) * d_y / d_x;
             }
