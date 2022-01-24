@@ -12,7 +12,7 @@ const char_constant = {
         lookLeft: 0,
         lookRight: 1,
     },
-    fall_speed: 6,
+    fall_speed: 1,
     follow_speed: 15,
     max_power: 400,
 };
@@ -62,18 +62,24 @@ class Char {
             this.draw();
         }
 
+        let time = 0;
         this.collision = function () {
-            let map = gameController.getCurrent().map;
-            let is_collision = true;
-            if(map.collision(this, false)){
-                is_collision = false;
-            }
+            this.fall_collision(char_constant.fall_speed + time);
+            if(this.status === char_status.inAir) time < 5 ? time += 0.1 : null;
+            else time = 0;
+        }
 
-            if(is_collision) {
-                this.y < Map1.getSize().height ? this.y += char_constant.fall_speed : this.status = char_status.dead;
-                if(this.status === char_status.inLand) this.status = char_status.inAir;
-            }else {
-                if(this.status === char_status.inAir) this.status = char_status.inLand;
+        this.fall_collision = function (distance){
+            let map = gameController.getCurrent().map;
+            for(let i = 0; i < distance; i++){
+                this.y+=1;
+                let data = map.collision(this, false);
+                if(data){
+                    this.y = data.y - this.w;
+                    if(this.status === char_status.inLand) this.status = char_status.inAir;
+                }else {
+                    if(this.status === char_status.inAir) this.status = char_status.inLand;
+                }
             }
         }
 

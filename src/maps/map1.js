@@ -146,22 +146,6 @@ const Map1 = function(){
         }
     }
 
-    // let total = 0;
-    // attr.abc = function (){
-    //     total = 0;
-    //     cal_texture(textures);
-    //     console.log(total);
-    // }
-    //
-    // function cal_texture(arr){
-    //     for (const texture of arr) {
-    //         total++;
-    //         if(texture.textures && texture.textures.length !== 0){
-    //             cal_texture(texture.textures);
-    //         }
-    //     }
-    // }
-
     function bulletDestroyMap(obj, arr) {
         for (const texture of arr) {
             if (texture.status === texture_status.INTACT) {

@@ -98,13 +98,9 @@ class Gun {
         this.fire = function (power) { // call from character
             // todo: when have more bullet, it can choose
             if(!this.bullet) {
-                this.bullet = new Bullet1(this.angle, power, this.head_x, this.head_y, gameController.getWindPower());
+                 this.bullet = new BasicBullet(this.angle, power, this.head_x, this.head_y, gameController.getWindPower());
             }
             this.bullet.update();
-            if (this.bullet.collision()) { // bullet.collision return true if collision
-                FireEvent.set(fire_status.swap_turn);
-                this.bullet = null;
-            }
         }
     }
 }
