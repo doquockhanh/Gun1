@@ -12,10 +12,12 @@ const Map1 = function(){
     for (let x = 600; x < MAP_WIDTH - 600; x += SIZE.max) {
         for (let y = 1600; y < 1700; y +=  SIZE.max) {
             let big_texture = new Texture(x, y,  SIZE.max);
+            big_texture.size = texture_constant.size.l;
             big_texture.textures = [];
             for (let i = x; i < x +  SIZE.max; i+= SIZE.medium) {
                 for (let j = y; j < y + SIZE.max; j+= SIZE.medium) {
                     let medium_texture = new Texture(i, j,  SIZE.medium);
+                    medium_texture.size = texture_constant.size.m;
                     medium_texture.textures = [];
                     for (let k = i; k < i +  SIZE.medium; k+= SIZE.min) {
                         for (let l = j; l < j + SIZE.medium; l+= SIZE.min) {
@@ -124,20 +126,20 @@ const Map1 = function(){
      *           when the bigger destroy, the smaller continue to collision
      * @param arr current textures collision #describle
      * @param obj
-     * @returns {{x, y}} position of collided texture
+     * @returns {Texture} smallest texture
      * @private
      */
     function soft_collision(arr, obj){
         for (const texture of arr) {
             if (texture.status === texture_status.INTACT) {
                 if(Collisions.two_square(obj, texture)) {
-                    return {x: texture.x, y: texture.y};
+                    return texture;
                 }
             }else {
                 if(texture.textures){
                     let result = soft_collision(texture.textures, obj)
                     if(result){ // call back
-                        return {x: texture.x, y: texture.y};
+                        return result;
                     }
                 }else {
                     arr.splice(arr.indexOf(texture), 1);

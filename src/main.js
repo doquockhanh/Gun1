@@ -4,20 +4,20 @@ let game_set = {
     map: null
 }
 
-let char1 =  new Char(700, 1500, 10, 10);
+let char1 =  new Char(700, 1300, 10, 10);
 let gun1 = new Gun(char1.x, char1.y, char1.w, char1.h);
-// let char2 =  new Char(1300, 1500, 10, 10);
-// let gun2 = new Gun(char2.x, char2.y, char2.w, char2.h);
+let char2 =  new Char(1300, 1500, 10, 10);
+let gun2 = new Gun(char2.x, char2.y, char2.w, char2.h);
 char1.setGun(gun1);
-// char2.setGun(gun2);
+char2.setGun(gun2);
 game_set.teamA = [ {
     char: char1,
     gun: gun1
 }]
-// game_set.teamB = [{
-//     char: char2,
-//     gun: gun2,
-// }]
+game_set.teamB = [{
+    char: char2,
+    gun: gun2,
+}]
 game_set.map = Map1;
 gameController.start(game_set);
 

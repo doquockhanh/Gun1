@@ -63,23 +63,48 @@ class Char {
         }
 
         let time = 0;
+        let count = 0;
         this.collision = function () {
-            this.fall_collision(char_constant.fall_speed + time);
+            let map = gameController.getCurrent().map;
+            let key_event = KeyEvent.up_down();
+            this.move_collision(map)
+            if(key_event.a || key_event.d){
+                count = 0;
+                let temp = {
+                    x: this.x,
+                    y: this.y,
+                }
+                this.move_collision(map);
+                if(count > 5){
+                    this.x = temp.x;
+                    this.y = temp.y;
+                }
+            }
+            this.fall_collision(char_constant.fall_speed + time, map);
             if(this.status === char_status.inAir) time < 5 ? time += 0.1 : null;
             else time = 0;
         }
 
-        this.fall_collision = function (distance){
-            let map = gameController.getCurrent().map;
+        this.fall_collision = function (distance, map){
             for(let i = 0; i < distance; i++){
                 this.y+=1;
                 let data = map.collision(this, false);
                 if(data){
                     this.y = data.y - this.w;
-                    if(this.status === char_status.inLand) this.status = char_status.inAir;
-                }else {
                     if(this.status === char_status.inAir) this.status = char_status.inLand;
+                }else {
+                    if(this.status === char_status.inLand) this.status = char_status.inAir;
                 }
+            }
+        }
+
+        this.move_collision = function (map) {
+            if(count > 5) return;
+            let texture = map.collision(this, false);
+            if (texture && texture.y && texture.size === texture_constant.size.s) {
+                count++;
+                this.y = texture.y - this.h;
+                this.move_collision(map);
             }
         }
 
