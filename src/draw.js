@@ -2,7 +2,6 @@ const Draw = function(){
     let attr = {};
     let context = camera.getCam();
     let canvas = camera.getCanvas();
-    let cam_position = camera.getPositions();
 
     attr.draw = function () {
         draw_wind();
@@ -35,11 +34,12 @@ const Draw = function(){
     const r = 20;
     const _angle = {
         p_x: canvas.width/2,
-        p_y: canvas.height - r * 2,
+        p_y: canvas.height - (r * (canvas.width / 1500)) * 2,
+        _r: r * (canvas.width / 1500)
     };
     function angle() {
         context.beginPath();
-        context.arc(_angle.p_x, _angle.p_y, r, Math.PI * 2, 0);
+        context.arc(_angle.p_x, _angle.p_y, _angle._r, Math.PI * 2, 0);
         context.stroke();
         context.closePath();
     }
@@ -50,20 +50,31 @@ const Draw = function(){
 
     const width = canvas.width/4;
     const _power = {
-        p_x: _angle.p_x - width - r * 2,
-        p_y: _angle.p_y - r,
+        p_x: _angle.p_x - width - _angle._r * 2,
+        p_y: _angle.p_y - _angle._r,
         w: width,
-        h: r,
+        h: _angle._r,
     };
     function power(){
         context.beginPath();
-        context.rect(_power.p_x, _power.p_y, width, _power.h);
+        context.rect(_power.p_x, _power.p_y, _power.w, _power.h);
         context.stroke();
         context.closePath();
     }
 
     attr.getPowerShape = function (){
         return _power;
+    }
+
+    attr.resizeShape = function (){
+        canvas = camera.getCanvas();
+        _angle._r = r * (canvas.width / 1500);
+        _angle.p_x = canvas.width/2;
+        _angle.p_y = canvas.height - _angle._r * 2;
+        _power.p_x = _angle.p_x - canvas.width/4 - _angle._r * 2;
+        _power.p_y = _angle.p_y - _angle._r;
+        _power.w = canvas.width/4;
+        _power.h = _angle._r;
     }
 
     return attr;

@@ -1,4 +1,4 @@
-const KeyEvent = function (){
+const MainEvent = function (){
   const attr = {};
 
   let evt_up_down = {w: 0, s: 0, a: 0, d: 0};
@@ -12,6 +12,11 @@ const KeyEvent = function (){
   onkeyup = d => {
     evt_up_down[d.key.toLowerCase()] = 0;
     outerKeyUpFunction(d.key.toLowerCase());
+  }
+
+  onresize = () => {
+    camera.resizeCanvas(window.innerWidth, window.innerHeight - 4);
+    Draw.resizeShape();
   }
 
   // !important

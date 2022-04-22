@@ -15,30 +15,48 @@ const char_constant = {
     fall_speed: 1,
     follow_speed: 15,
     max_power: 400,
+    size: {
+        width: 10,
+        height: 20,
+    },
+    image_char_look_right: "../img_src/characters/character_look_right.png",
+    image_char_look_left: "../img_src/characters/character_look_left.png",
+    img_size: {
+        width: 14,
+        height: 20,
+    }
 };
 
 class Char {
-    constructor (x, y, width, height) {
+    constructor (x, y) {
         this.x = x;
         this.y = y;
-        this.w = width;
-        this.h = height;
+        this.w = char_constant.size.width;
+        this.h = char_constant.size.height;
         this.status = char_status.waiting; // when characters drop, it cant move
         this.side = char_constant.side.lookRight; // characters move left/right will look at left/right side
         this.gun = null;
+        this.image = new Image();
         this.setGun = function (gun) {
             this.gun = gun;
         }
         this.power = 1;
+        this.image.src = char_constant.image_char_look_right;
 
         this.draw = function () {
             let context = camera.getCam();
             let camPosition = camera.getPositions();
             context.beginPath();
-            context.fillStyle = "rgb(0, 255, 0, 0.6)"
+            context.fillStyle = "rgb(0, 255, 0, 0.6)";
             let x = this.x - camPosition.x;
             let y = this.y - camPosition.y;
-            context.fillRect(x, y, this.w, this.h);
+            if(this.side ===  char_constant.side.lookRight){
+                this.image.src = char_constant.image_char_look_right;
+            }else if(this.side ===  char_constant.side.lookLeft) {
+                this.image.src = char_constant.image_char_look_left;
+            }
+            context.drawImage(this.image, x, y - char_constant.img_size.height + this.h, char_constant.img_size.width, char_constant.img_size.height);
+            // context.strokeRect(x, y, this.w, this.h);
 
             // draw power
             let shape = Draw.getPowerShape();
@@ -63,23 +81,8 @@ class Char {
         }
 
         let time = 0;
-        let count = 0;
         this.collision = function () {
             let map = gameController.getCurrent().map;
-            let key_event = KeyEvent.up_down();
-            this.move_collision(map)
-            if(key_event.a || key_event.d){
-                count = 0;
-                let temp = {
-                    x: this.x,
-                    y: this.y,
-                }
-                this.move_collision(map);
-                if(count > 5){
-                    this.x = temp.x;
-                    this.y = temp.y;
-                }
-            }
             this.fall_collision(char_constant.fall_speed + time, map);
             if(this.status === char_status.inAir) time < 5 ? time += 0.1 : null;
             else time = 0;
@@ -90,7 +93,7 @@ class Char {
                 this.y+=1;
                 let data = map.collision(this, false);
                 if(data){
-                    this.y = data.y - this.w;
+                    this.y = data.y - this.h;
                     if(this.status === char_status.inAir) this.status = char_status.inLand;
                 }else {
                     if(this.status === char_status.inLand) this.status = char_status.inAir;
@@ -98,19 +101,9 @@ class Char {
             }
         }
 
-        this.move_collision = function (map) {
-            if(count > 5) return;
-            let texture = map.collision(this, false);
-            if (texture && texture.y && texture.size === texture_constant.size.s) {
-                count++;
-                this.y = texture.y - this.h;
-                this.move_collision(map);
-            }
-        }
-
         this.move = function() {
             if(Movements.isCamFollowing() && this.status === char_status.inLand) {
-                let key = KeyEvent.up_down();
+                let key = MainEvent.up_down();
                 let w = Map1.getSize().width;
                 if(key.a){
                     this.x > 0 ? this.x -= char_constant.speed : this.x = 0;

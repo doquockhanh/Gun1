@@ -4,17 +4,13 @@ const camera = function(){
     let context = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight - 4;
-    onresize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight - 4;
-    }
 
     let cam_x = 500;
     let cam_y = 500;
     let cam_move_s = 20;
     attr.update = function () {
         if(Movements.isCamMoving()) {
-            let key = KeyEvent.up_down()
+            let key = MainEvent.up_down()
             let w = Map1.getSize().width - canvas.width;
             let h = Map1.getSize().height - canvas.height;
             // cam moving around (press space to back to current follower) (char1)
@@ -47,6 +43,11 @@ const camera = function(){
 
     attr.clear = function(){
         context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    attr.resizeCanvas = function (x, y){
+        canvas.width = x;
+        canvas.height = y;
     }
 
     return attr;

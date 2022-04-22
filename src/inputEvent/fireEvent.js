@@ -2,7 +2,7 @@ const fire_status = {
     waiting: 0,
     accumulation: 1,
     firing: 2,
-    swap_turn: 3, // after bullet destroy
+    swap_turn: 3, // after bullet destroyed.
 }
 
 /**

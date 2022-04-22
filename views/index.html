@@ -17,9 +17,16 @@
     </style>
 </head>
 <body>
+    <div class="row">
+        <div class="lg-3 md-6 sm-12"></div>
+        <div class="lg-3 md-6 sm-12"></div>
+        <div class="lg-3 md-6 sm-12"></div>
+        <div class="lg-3 md-6 sm-12"></div>
+    </div>
+
     <canvas id="canvas"></canvas>
     <button onclick="showHideHelpList()">show/hide help list</button>
-    <ul id="helpList">
+    <ul id="helpList" hidden>
         <li>move around: a, d</li>
         <li>change gun angle: s, w</li>
         <li>turn on camera: c</li>
@@ -36,10 +43,10 @@
     <script src="../src/maps/map1.js"></script>
     <script src="../src/characters/char.js"></script>
     <script src="../src/camera.js"></script>
-    <script src="../src/inputEvent/keyEvent.js"></script>
+    <script src="../src/draw.js"></script>
+    <script src="../src/inputEvent/mainEvent.js"></script>
     <script src="../src/inputEvent/fireEvent.js"></script>
     <script src="../src/gameController.js"></script>
-    <script src="../src/draw.js"></script>
     <script src="../src/main.js"></script>
 </body>
 </html>

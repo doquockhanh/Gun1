@@ -2,8 +2,16 @@ const gun_constant = {
     limitAngle: {
         leftSide: 225,
         rightSide: 135
+    },
+    size: {
+        gunner: {
+            x: 10,
+            y: 20
+        }
     }
 }
+
+const default_gun = "../img_src/gun.png"
 
 class Gun {
     constructor(x, y, w, h) {
@@ -17,6 +25,8 @@ class Gun {
         this.w = w;
         this.h = h;
         this.bullet = null;
+        this.img = new Image();
+        this.img.src = default_gun;
 
         this.update = function (side, x, y) {
             this.setPosition(x, y);
@@ -26,12 +36,12 @@ class Gun {
 
         this.setPosition = function (x, y) {
             this.tail_x = x + this.w / 2;
-            this.tail_y = y + this.h / 3;
+            this.tail_y = y + this.h / 2.5;
         }
 
         this.change_angle = function (side) {  // this chang angle of gun
             if(Movements.isCamFollowing()) {
-                let key = KeyEvent.up_down();
+                let key = MainEvent.up_down();
                 if(this.current_side !== side) { // change angle when char move left and right
                     this.angle = 360 - this.angle;
                     this.current_side = side;
@@ -63,11 +73,13 @@ class Gun {
             let y = this.tail_y - camPosition.y;
             let _x = this.head_x - camPosition.x;
             let _y = this.head_y - camPosition.y;
-            // todo: better gun
-            context.beginPath();
-            context.moveTo(x, y);
-            context.lineTo(_x, _y);
-            context.stroke();
+     
+            context.save();
+            context.translate(x, y);
+            context.rotate((this.angle - 180) * Math.PI / 180);
+            context.translate(-x - gun_constant.size.gunner.x/2, -y - gun_constant.size.gunner.y/2);
+            context.drawImage(this.img, x, y, gun_constant.size.gunner.x, gun_constant.size.gunner.y);
+            context.restore();
 
             // draw angle number
             let shape = Draw.getAngleShape();
