@@ -19,8 +19,8 @@ const char_constant = {
         width: 10,
         height: 20,
     },
-    image_char_look_right: "../img_src/characters/character_look_right.png",
-    image_char_look_left: "../img_src/characters/character_look_left.png",
+    image_char_look_right: "../src/assets/characters/character_look_right.png",
+    image_char_look_left: "../src/assets/characters/character_look_left.png",
     img_size: {
         width: 14,
         height: 20,

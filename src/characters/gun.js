@@ -11,7 +11,7 @@ const gun_constant = {
     }
 }
 
-const default_gun = "../img_src/gun.png"
+const default_gun = "../src/assets/gun.png"
 
 class Gun {
     constructor(x, y, w, h) {
